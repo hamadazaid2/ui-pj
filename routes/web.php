@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +21,21 @@ Route::get('/', function () {
 });
 
 Route::get('/site', function () {
-    return view('website.index');
+    return view('website.layout.layout');
 });
+// Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['LocaleSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
+    Route::group(['prefix' => 'offers'], function () {
+        Route::get('/get', 'App\Http\Controllers\OfferTestController@getOffers');
+        // Route::get('store', 'App\Http\Controllers\OfferTestController@store');
+        Route::get('create', 'App\Http\Controllers\OfferTestController@create');
+        Route::post('store', 'App\Http\Controllers\OfferTestController@store')->name('offer.store');
+    });
+// });
+Route::get('/offers', 'App\Http\Controllers\OfferTestController@getOffers');
+
+
+
+//AUTH ROUTES
 
 Auth::routes(['verify' => true]);
 
