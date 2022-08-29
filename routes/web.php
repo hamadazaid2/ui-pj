@@ -16,6 +16,10 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
+Route::get('/test', function () {
+    return 'name_' . LaravelLocalization::getCurrentLocale() . ' as name';
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -25,10 +29,12 @@ Route::get('/site', function () {
 });
 // Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['LocaleSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
     Route::group(['prefix' => 'offers'], function () {
-        Route::get('/get', 'App\Http\Controllers\OfferTestController@getOffers');
+        Route::get('/all', 'App\Http\Controllers\OfferTestController@getOffers')->name('offer.all');
         // Route::get('store', 'App\Http\Controllers\OfferTestController@store');
         Route::get('create', 'App\Http\Controllers\OfferTestController@create');
         Route::post('store', 'App\Http\Controllers\OfferTestController@store')->name('offer.store');
+        Route::get('edit/{id}', 'App\Http\Controllers\OfferTestController@edit')->name('offer.edit');
+        Route::post('update/{id}', 'App\Http\Controllers\OfferTestController@update')->name('offer.update');
     });
 // });
 Route::get('/offers', 'App\Http\Controllers\OfferTestController@getOffers');

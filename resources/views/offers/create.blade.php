@@ -454,17 +454,28 @@
             <div style="text-align: left">
                 @if (Session::has('success'))
                     <div style="background: green; width: 20rem; height: 2rem; color: white; padding: 0.3rem; text-align: center; border-radius: 10px;"
-                        class="alert alert-success" role="alert"> {{Session::get('success')}}
+                        class="alert alert-success" role="alert"> {{ Session::get('success') }}
                     </div>
                 @endif
-                <form method="POST" action="{{ route('offer.store') }}">
+                <form method="POST" action="{{ route('offer.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label
                             style="font-size: 1.2rem; margin-right: 1rem; display: inline-block; width: 8rem; padding: 1rem 0 1rem 0;"
-                            for="exampleInputEmail1">Offer Name:</label>
+                            for="exampleInputEmail1">Offer Name In Arabic:</label>
                         <input style="font-size: 1.2rem" type="text" class="form-control"
-                            placeholder="Enter Offer Name" class="forminput" name="name">
+                            placeholder="Enter Offer Name" class="forminput" name="name_ar">
+                        <br>
+                        @error('name')
+                            <small style="color: red" class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label
+                            style="font-size: 1.2rem; margin-right: 1rem; display: inline-block; width: 8rem; padding: 1rem 0 1rem 0;"
+                            for="exampleInputEmail1">Offer Name In English:</label>
+                        <input style="font-size: 1.2rem" type="text" class="form-control"
+                            placeholder="Enter Offer Name" class="forminput" name="name_en">
                         <br>
                         @error('name')
                             <small style="color: red" class="form-text text-danger">{{ $message }}</small>
@@ -485,14 +496,35 @@
                     <div class="form-group">
                         <label
                             style="font-size: 1.2rem; margin-right: 1rem; display: inline-block; width: 8rem; padding: 1rem 0 1rem 0;"
-                            for="exampleInputPassword1">Offer Details: </label>
+                            for="exampleInputPassword1">Offer Details In Arabic: </label>
                         <input style="font-size: 1.2rem" type="text" class="form-control"
-                            placeholder="Enter Offer Details" class="forminput" name="details">
+                            placeholder="Enter Offer Details" class="forminput" name="details_ar">
                         <br>
                         @error('details')
                             <small style="color: red" class="form-text text-danger">{{ $message }}</small>
                         @enderror
-
+                    </div>
+                    <div class="form-group">
+                        <label
+                            style="font-size: 1.2rem; margin-right: 1rem; display: inline-block; width: 8rem; padding: 1rem 0 1rem 0;"
+                            for="exampleInputPassword1">Offer Details In English: </label>
+                        <input style="font-size: 1.2rem" type="text" class="form-control"
+                            placeholder="Enter Offer Details" class="forminput" name="details_en">
+                        <br>
+                        @error('details')
+                            <small style="color: red" class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label
+                            style="font-size: 1.2rem; margin-right: 1rem; display: inline-block; width: 8rem; padding: 1rem 0 1rem 0;"
+                            for="photo">Choose Your Photo: </label>
+                        <input id="photo" style="font-size: 1.2rem" type="file" class="form-control" class="forminput"
+                            name="photo">
+                        <br>
+                        @error('phote')
+                            <small style="color: red" class="form-text text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <button type="submit" class="formbtn">Save Offer</button>
                 </form>

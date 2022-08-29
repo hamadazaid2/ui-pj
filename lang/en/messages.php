@@ -6,4 +6,6 @@ return [
     "offerNamemax" => "Offer name exceeds the required number of characters",
     "offerNameUnique" => "Offer name is already exists",
     "offerPriceNumeric" => "Offer price must be a number",
+    "offerPhotoRequired"=>"Offer photo is required",
+
 ];
