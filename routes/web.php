@@ -58,3 +58,12 @@ Route::get('/offers', 'App\Http\Controllers\OfferTestController@getOffers');
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+
+
+###################### START AJAX
+
+
+Route::group(['prefix'=>'ajax-offer'], function(){
+    Route::get('create', 'App\Http\Controllers\Ajax\OfferController@create')->name('ajax.offer.create');
+    Route::post('store', 'App\Http\Controllers\Ajax\OfferController@store')->name('ajax.offer.store');
+});
