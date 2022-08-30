@@ -522,7 +522,7 @@
                         <input id="photo" style="font-size: 1.2rem" type="file" class="form-control" class="forminput"
                             name="photo">
                         <br>
-                        @error('phote')
+                        @error('photo')
                             <small style="color: red" class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>

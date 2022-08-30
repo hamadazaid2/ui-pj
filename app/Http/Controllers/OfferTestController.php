@@ -27,6 +27,7 @@ class OfferTestController extends Controller
             'name_' . LaravelLocalization::getCurrentLocale() . ' as name',
             'price',
             'details_' . LaravelLocalization::getCurrentLocale() . ' as details',
+            'photo'
         )->get();
         return view('offers.showAll', compact('offers'));
     }
@@ -86,25 +87,32 @@ class OfferTestController extends Controller
     public function update(OfferRequest $request, $id)
     {
 
-        // // $validator = Validator::make($request->all(), $request->rules(), $request->messages());
-        // // if ($validator->fails()) {
-        // //     return redirect()->back()->withErrors($validator)->withInputs($request->all());
-        // // }
-
         $offer = Offer::find($id);
 
         if (!$offer) {
             return redirect()->back();
         }
-        $offer->update($request->all());
-        // $offer->update([
-        //     'name_ar' => $request->name_ar,
-        //     'name_en' => $request->name_en,
-        //     'price' => $request->price,
-        //     'details_ar' => $request->details_ar,
-        //     'details_en' => $request->details_en,
-        // ]);
-        return redirect()->back()->with('success', 'تم تحديث البيانات');
+        $file_name = $this->savePhoto($request->photo, 'images/offers');
+        $offer->update([
+            'name_ar' => $request->name_ar,
+            'name_en' => $request->name_en,
+            'price' => $request->price,
+            'details_ar' => $request->details_ar,
+            'details_en' => $request->details_en,
+            'photo' => $file_name,
+        ]);
+        return redirect()->to(route('offer.all'))->with('success', 'تم تحديث البيانات');
+    }
+
+    public function delete($id)
+    {
+        $offer = Offer::find($id);
+        if(!$offer){
+            return redirect()->back();
+        }
+
+        $offer->delete();
+        return redirect()->to(route('offer.all'))->with('success', 'تم الحذف بنجاح ');
     }
 
 

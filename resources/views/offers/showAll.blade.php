@@ -449,6 +449,18 @@
             border-radius: 10px;
             cursor: pointer;
         }
+
+        .btn-delete {
+            color: white;
+            background-color: red;
+            border-radius: 1px color: white;
+            padding: 15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -470,6 +482,14 @@
             </div>
         @endif
 
+        {{-- @if (Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{Session::get('success')}}
+        </div>
+        @endif --}}
+
+
+
         <div>
             <table class="table">
                 <thead>
@@ -478,6 +498,7 @@
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Details</th>
+                        <th scope="col">Photo</th>
                         <th scope="col">Operations</th>
                     </tr>
                 </thead>
@@ -492,12 +513,15 @@
                             <td>{{ $offer->price }}</td>
                             <td>{{ $offer->details }}</td>
                             <td>
-                                <a href="{{ route('offer.edit', $offer->id) }}"><button
-                                        class="btn">Edit</button></a>
+                                <img src='{{ asset($offer->photo) }}' height="50px" width="50px" alt="photo">
+                            </td>
+                            <td>
+                                <a href="{{ route('offer.edit', $offer->id) }}"><button class="btn">Edit</button></a>
+                                <a href="{{ route('offer.delete', $offer->id) }}"><button
+                                        class="btn-delete">Delete</button></a>
                             </td>
                         </tr>
                     @endforeach
-
                 </tbody>
             </table>
         </div>
