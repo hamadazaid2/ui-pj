@@ -38,7 +38,7 @@ class VideoController extends Controller
             'embed_link' => $request->embed_link,
             'views' => $request->views,
         ]);
-        return 'SUCCESS';
+        return view('video.showAll');
     }
 
     public function edit($id)
@@ -48,7 +48,7 @@ class VideoController extends Controller
             return redirect()->to(route('video.all'));
         }
 
-        return view('video.edit', compact('video'));
+        return 'SUCCESS';
     }
 
     public function update(VideoRequest $request, $id)

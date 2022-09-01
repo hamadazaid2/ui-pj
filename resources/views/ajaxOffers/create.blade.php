@@ -86,7 +86,7 @@
             $.ajax({
                 type: 'post',
                 enctype: 'multipart/form-data',
-                url: '{{ route('ajax.offer.store') }}',
+                url: '{{route('ajax.offer.store')}}',
                 data: formData,
                 processData: false,
                 contentType: false,
