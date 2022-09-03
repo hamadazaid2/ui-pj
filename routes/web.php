@@ -72,11 +72,22 @@ Route::group(['prefix' => 'ajax-offer'], function () {
     Route::post('update', 'App\Http\Controllers\Ajax\OfferController@update')->name('ajax.offer.update');
 });
 
-###################### START AJAX ######################
+###################### END AJAX ######################
 
 
 ###################### START AUTHIENTICATION ######################
-// Route::group(['prefix'=>'auth'], function(){
-//     Route::get('adult', 'App\Http\Controllers\Auth\CustomAuth@adult') -> middleware('checkAgeMiddleware');
-// });
-###################### END AUTHIENTICATION ######################
+Route::group(['prefix' => 'auth', 'middleware' => 'check.age'], function () {
+    Route::get('adult', 'App\Http\Controllers\Auth\CustomAuthController@adult')->name('auth.adult');
+    Route::get('site', 'App\Http\Controllers\Auth\CustomAuthController@site')->name('auth.site')->middleware('auth:web');
+    Route::get('admin', 'App\Http\Controllers\Auth\CustomAuthController@admin')->name('auth.admin')->middleware('auth:admin');
+
+    ///  GUARD
+
+    // Route::get('admin/login', 'App\Http\Controllers\Auth\CustomAuthController@adminLogin')->name('auth.login.admin');
+    // Route::post('admin/login/check', 'App\Http\Controllers\Auth\CustomAuthController@checkAdminLogin')->name('auth.admin.checkLogin');
+
+
+
+});
+###################### END AUTHIENTICATION   ######################
+
