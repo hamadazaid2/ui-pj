@@ -21,7 +21,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 // });
 
 Route::group(['prefix' => 'videos'], function () {
-    Route::get('show/{id}', 'App\Http\Controllers\Video\VideoController@show')->name('video.show');
+    Route::get('show/{id}', 'App\Http\Controllers\Video\VideoController@show')->name('video.show')->middleware('auth');
     Route::get('all', 'App\Http\Controllers\Video\VideoController@index')->name('video.all');
     Route::get('create', 'App\Http\Controllers\Video\VideoController@create')->name('video.create');
     Route::post('store', 'App\Http\Controllers\Video\VideoController@store')->name('video.store');

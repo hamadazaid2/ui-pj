@@ -27,12 +27,16 @@ class IncreaseViewsListener
     public function handle(WatchVideoEvent $event)
     {
         //
-        $this->updateViews($event->video);
+        // if (session()->has('videoIsVisited')) {
+            $this->updateViews($event->video);
+        // }
     }
 
     protected function updateViews($video)
     {
         $video->views += 1;
         $video->save();
+
+        session()->put('videoIsVisited', $video->id);
     }
 }
