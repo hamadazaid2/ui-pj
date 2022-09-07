@@ -33,7 +33,11 @@ class OfferController extends Controller
 
     public function store(OfferRequest $request)
     {
-        $file_name = $this->savePhoto($request->photo, 'images/offers');
+        $file_name = null;
+        if ($request->phote != NULL) {
+            $file_name = $this->savePhoto($request->photo, 'images/offers');
+        }
+
 
         $offer = Offer::create(
             [

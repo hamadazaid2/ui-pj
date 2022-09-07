@@ -10,9 +10,9 @@
                 <input style="font-size: 1.2rem" type="text" class="form-control" placeholder="Enter Offer Name"
                     class="forminput" name="name_ar">
                 <br>
-                @error('name')
-                    <small style="color: red" class="form-text text-danger">{{ $message }}</small>
-                @enderror
+                {{-- ERROR MESSAGE --}}
+                <small id="name_ar_error" style="color: red" class="form-text text-danger"></small>
+
             </div>
             <div class="form-group">
                 <label
@@ -21,9 +21,8 @@
                 <input style="font-size: 1.2rem" type="text" class="form-control" placeholder="Enter Offer Name"
                     class="forminput" name="name_en">
                 <br>
-                @error('name')
-                    <small style="color: red" class="form-text text-danger">{{ $message }}</small>
-                @enderror
+                {{-- ERROR MESSAGE --}}
+                <small id="name_en_error" style="color: red" class="form-text text-danger"></small>
             </div>
             <div class="form-group">
                 <label
@@ -32,9 +31,8 @@
                 <input style="font-size: 1.2rem" type="text" class="form-control" placeholder="Enter Offer Price"
                     class="forminput" name="price">
                 <br>
-                @error('price')
-                    <small style="color: red" class="form-text text-danger">{{ $message }}</small>
-                @enderror
+                {{-- ERROR MESSAGE --}}
+                <small id="price_error" style="color: red" class="form-text text-danger"></small>
 
             </div>
             <div class="form-group">
@@ -44,9 +42,8 @@
                 <input style="font-size: 1.2rem" type="text" class="form-control" placeholder="Enter Offer Details"
                     class="forminput" name="details_ar">
                 <br>
-                @error('details')
-                    <small style="color: red" class="form-text text-danger">{{ $message }}</small>
-                @enderror
+                {{-- ERROR MESSAGE --}}
+                <small id="details_ar_error" style="color: red" class="form-text text-danger"></small>
             </div>
             <div class="form-group">
                 <label
@@ -55,9 +52,8 @@
                 <input style="font-size: 1.2rem" type="text" class="form-control" placeholder="Enter Offer Details"
                     class="forminput" name="details_en">
                 <br>
-                @error('details')
-                    <small style="color: red" class="form-text text-danger">{{ $message }}</small>
-                @enderror
+                {{-- ERROR MESSAGE --}}
+                <small id="details_en_error" style="color: red" class="form-text text-danger"></small>
             </div>
             <div class="form-group">
                 <label
@@ -66,9 +62,8 @@
                 <input id="photo" style="font-size: 1.2rem" type="file" class="form-control" class="forminput"
                     name="photo">
                 <br>
-                @error('photo')
-                    <small style="color: red" class="form-text text-danger">{{ $message }}</small>
-                @enderror
+                {{-- ERROR MESSAGE --}}
+                <small id="photo_error" style="color: red" class="form-text text-danger"></small>
             </div>
             <div class="alert alert-success" role="alert" id="success-msg" style="display: none;">
                 تم الحفظ بنجاح
@@ -83,10 +78,16 @@
         $(document).on('click', '#save_offer', function(e) {
             e.preventDefault();
             var formData = new FormData($('#offer-form')[0]);
+            $('#name_ar_error').text('');
+            $('#name_en_error').text('');
+            $('#price_error').text('');
+            $('#details_ar_error').text('');
+            $('#details_en_error').text('');
+            $('#photo_error').text('');
             $.ajax({
                 type: 'post',
                 enctype: 'multipart/form-data',
-                url: '{{route('ajax.offer.store')}}',
+                url: '{{ route('ajax.offer.store') }}',
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -97,6 +98,10 @@
                     }
                 },
                 error: function(reject) {
+                    var response = $.parseJSON(reject.responseText);
+                    $.each(response.errors, function(key, val) {
+                        $('#' + key + '_error').text(val[0]);
+                    });
 
                 }
             });
